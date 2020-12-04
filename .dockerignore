@@ -1,0 +1,5 @@
+# npm modules are going to be installed on virtual drive(RUN npm install)
+node_modules
+
+# dist will be compiled on virtual drive(RUN npm run build)
+dist
