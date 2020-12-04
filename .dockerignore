@@ -1,5 +1,5 @@
-# npm modules are going to be installed on virtual drive(RUN npm install)
+# npm modules are going to be installed on virtual drive(#Dependencies)
 node_modules
 
-# dist will be compiled on virtual drive(RUN npm run build)
+# dist will be compiled on virtual drive(#Build and #Production)
 dist
