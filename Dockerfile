@@ -11,14 +11,14 @@ COPY . .
 RUN npm run build
 
 
-
-# Release
+# Production
 FROM node:12-alpine
 WORKDIR /app
+COPY --from=build /app/dist ./dist
+
+# Dependencies
 COPY --from=build /app/package.json ./
 RUN npm install --only=production && npm cache clean --force
-
-COPY --from=build /app/dist ./dist
 
 # Application
 USER node
