@@ -1,6 +1,5 @@
 # Base
-FROM node:12
-
+FROM node:12-alpine AS build
 WORKDIR /app
 
 # Dependencies
@@ -10,6 +9,16 @@ RUN npm install
 # Build
 COPY . .
 RUN npm run build
+
+
+# Production
+FROM node:12-alpine
+WORKDIR /app
+COPY --from=build /app/dist ./dist
+
+# Dependencies
+COPY --from=build /app/package.json ./
+RUN npm install --only=production && npm cache clean --force
 
 # Application
 USER node
