@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REGION=eu-west-1
+REGION=us-east-1
 AWS_ACCOUNT_ID=126492617923
 PROFILE=default
 DOCKER_APP_NAME=artifisher-cart-api
