@@ -1,0 +1,8 @@
+# npm modules are going to be installed on virtual drive(#Dependencies)
+node_modules
+
+# dist will be compiled on virtual drive(#Build and #Production)
+dist
+
+# don't need it since we don't run tests remotely
+test

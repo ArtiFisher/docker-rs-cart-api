@@ -1,17 +1,21 @@
 # Base
-FROM node:12
+FROM node:12.18.3-alpine as build
 
 WORKDIR /app
 
-# Dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
-# Build
 COPY . .
 RUN npm run build
+RUN npm prune --production
 
-# Application
+# Production
+FROM node:12.18.3-alpine as production
+
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+
 USER node
 ENV PORT=8080
 EXPOSE 8080
