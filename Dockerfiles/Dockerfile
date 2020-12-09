@@ -1,31 +1,23 @@
 # Base
-FROM node:12-alpine AS base
+FROM node:12.18.3-alpine as build
 
 WORKDIR /app
 
-# Dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
-# Build
-WORKDIR /app
 COPY . .
 RUN npm run build
-
+RUN npm prune --production
 
 # Production
-FROM node:12-alpine
+FROM node:12.18.3-alpine as production
 
-# Dependencies
-COPY --from=base /app/package.json ./
-RUN npm install --only=production && npm cache clean --force
-RUN npm install pm2 -g
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
 
-COPY --from=base /app/dist ./dist
-
-# Application
 USER node
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["pm2-runtime", "dist/main.js"]
+CMD ["node", "dist/main.js"]
